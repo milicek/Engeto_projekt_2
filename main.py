@@ -4,56 +4,6 @@ projekt_2.py: první projekt do Engeto Online Python Akademie
 author: Michal Uryč
 email: michal.uryc@seznam.cz
 """
-#Bull & Cows - hra postavená na hádání 4 ciferného čísla
-
-"""_program pozdraví užitele a vypíše úvodní text  (viz. níže v ukázkách),
-    program dále vytvoří tajné 4místné číslo (číslice musí být unikátní a nesmí začínat 0)hráč hádá číslo. 
-    Program jej upozorní, pokud zadá číslo kratší nebo delší než 4 čísla, 
-    pokud bude obsahovat duplicity, začínat nulou, příp. obsahovat nečíselné znaky,program vyhodnotí tip uživatele,
-    program dále vypíše počet bull/ bulls (pokud uživatel uhodne jak číslo, tak jeho umístění), 
-    příp. cows/ cows (pokud uživatel uhodne pouze číslo, ale ne jeho umístění). 
-    Vrácené ohodnocení musí brát ohled na jednotné a množné číslo ve výstupu. 
-    Tedy 1 bull a 2 bulls (stejně pro cow/cows),zápis organizovaný do krátkých a přehledných funkcí.
-    Tvoje řešení nahraješ do souboru main.py (pokud pojmenuješ soubor jinak, nebude uznaný),
-    repozitář bude obsahovat jedinný .py soubor s výstupem (pokud jej třeba rozdělíš jako main_1.py a main_2.py, nebude uznaný).
-    každý projekt má svůj vlastní, oddělený repozitář (zvlášť repozitář pro 1. projekt, zvlášť repozitář pro další projekt, ...).
-    
-    Hi there!
------------------------------------------------
-I've generated a random 4 digit number for you.
-Let's play a bulls and cows game.
------------------------------------------------
-Enter a number:
------------------------------------------------
-
-Příklad hry s číslem 2017
-Hi there!
------------------------------------------------
-I've generated a random 4 digit number for you.
-Let's play a bulls and cows game.
------------------------------------------------
-Enter a number:
------------------------------------------------
->>> 1234
-0 bulls, 2 cows
------------------------------------------------
->>> 6147
-1 bull, 1 cow
------------------------------------------------
->>> 2417
-3 bulls, 0 cows
------------------------------------------------
->>> 2017
-Correct, you've guessed the right number
-in 4 guesses!
------------------------------------------------
-That's amazing!
-
-Program toho může umět víc. Můžeš přidat například:
-počítání času, za jak dlouho uživatel uhádne tajné číslo
-uchovávat statistiky počtu odhadů jednotlivých her
-    """
-
 
 #import knihoven
 from random import randint
@@ -130,6 +80,30 @@ def vyhodnot_vstup(vstup: str, vzor: str) -> dict:
 oddelovac = 30 * "-"
 
 
+def jednotne_mnozne(slovnik: dict) -> str:
+    """
+    Zkontroluj jestli hodnoty jednotlivých klíčů slovníku
+    obsahují větší hodnotu než 1 a pokud ano přidají
+    za klíč písmeno "s" jako množné číslo
+    Nakonec vypíší všechny vyhodnocené klíča a za ně hodnoty
+    oddělené čárkou na jeden řádek jako string
+
+    návrat: str
+    """
+    
+    vystup = ""
+    for text, hodnota in slovnik.items():
+        if hodnota <= 1:
+            pomocne = str(hodnota) + " " + text
+        else:
+            pomocne = str(hodnota) + " " + text + "s"
+        if vystup == "":
+            vystup = pomocne
+        else:        
+            vystup = vystup + ", " + pomocne
+    return vystup
+
+
 
 #hlavička
 print("Hi there !")
@@ -148,7 +122,8 @@ while hodnoceni["bull"] != 4:
     if zkontroluj_vstup(vstup):
         hodnoceni = vyhodnot_vstup(vstup, vzor)
         pocitadlo += 1
-        print(hodnoceni["bull"], " Bulls,", hodnoceni["cow"], "Cows")
+#        print(hodnoceni["bull"], " Bulls,", hodnoceni["cow"], "Cows")
+        print(jednotne_mnozne(hodnoceni))
         print(oddelovac)
 print("Correct, you've guessed the right number in ", pocitadlo,  "guesses!")
 print(oddelovac)
