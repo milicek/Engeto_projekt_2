@@ -141,15 +141,16 @@ print("Enter a number:")
 print(oddelovac)
 
 vzor = vytvor_ctyrmistne_cislo()
-hodnoceni = {"bull": 0, "pocitadlo": 0}
+hodnoceni = {"bull": 0}
+pocitadlo = 0
 while hodnoceni["bull"] != 4:
     vstup = input(">>> ")
     if zkontroluj_vstup(vstup):
         hodnoceni = vyhodnot_vstup(vstup, vzor)
-        hodnoceni["pocitadlo"] += 1
+        pocitadlo += 1
         print(hodnoceni["bull"], " Bulls,", hodnoceni["cow"], "Cows")
         print(oddelovac)
-print("Correct, you've guessed the right number in ", hodnoceni["pocitadlo"],  "guesses!")
+print("Correct, you've guessed the right number in ", pocitadlo,  "guesses!")
 print(oddelovac)
 print("That's amazing!")
     
