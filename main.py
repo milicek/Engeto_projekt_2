@@ -1,5 +1,5 @@
 """
-projekt_2.py: první projekt do Engeto Online Python Akademie
+main.py: druhý projekt do Engeto Online Python Akademie
 
 author: Michal Uryč
 email: michal.uryc@seznam.cz
@@ -75,11 +75,6 @@ def vyhodnot_vstup(vstup: str, vzor: str) -> dict:
                 vystup["cow"] += 1
     return vystup
 
-
-#pomocné proměnné
-oddelovac = 30 * "-"
-
-
 def jednotne_mnozne(slovnik: dict) -> str:
     """
     Zkontroluj jestli hodnoty jednotlivých klíčů slovníku
@@ -93,7 +88,7 @@ def jednotne_mnozne(slovnik: dict) -> str:
     
     vystup = ""
     for text, hodnota in slovnik.items():
-        if hodnota <= 1:
+        if hodnota == 1:
             pomocne = str(hodnota) + " " + text
         else:
             pomocne = str(hodnota) + " " + text + "s"
@@ -103,7 +98,8 @@ def jednotne_mnozne(slovnik: dict) -> str:
             vystup = vystup + ", " + pomocne
     return vystup
 
-
+#pomocné proměnné
+oddelovac = 30 * "-"
 
 #hlavička
 print("Hi there !")
@@ -122,7 +118,6 @@ while hodnoceni["bull"] != 4:
     if zkontroluj_vstup(vstup):
         hodnoceni = vyhodnot_vstup(vstup, vzor)
         pocitadlo += 1
-#        print(hodnoceni["bull"], " Bulls,", hodnoceni["cow"], "Cows")
         print(jednotne_mnozne(hodnoceni))
         print(oddelovac)
 print("Correct, you've guessed the right number in ", pocitadlo,  "guesses!")
