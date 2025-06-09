@@ -62,19 +62,19 @@ from random import randint
 #funkce
 def vytvor_ctyrmistne_cislo() -> str:
     """
-    Vytvoří náhodné číslo, které bude mít počet cifer podle parametru cifer.
-    Číslo nebude začínat nulou
+    Vytvoří náhodné číslo, které bude mít 4 číslice.
+    Číslo nebude začínat nulou a číslice se nebudou opakovat.
 
     návrat: str
     """
-    cisla = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
-    prvni = randint(1,9)
-    cislo = cisla[prvni]
-    cisla.remove(prvni)
+    vyber_cislic = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+    prvni_cislice = randint(1,9)
+    cislo = vyber_cislic[prvni_cislice]
+    del vyber_cislic[prvni_cislice]
     for c in range(3):
-        dalsi = randint(0,(len(cisla)-1))
-        cislo = str(cislo) + str(dalsi)
-        cisla.remove(dalsi)
+        dalsi_cislice = randint(0,(len(vyber_cislic)-1))
+        cislo = str(cislo) + str(vyber_cislic[dalsi_cislice])
+        del vyber_cislic[dalsi_cislice]
     return str(cislo)
 
 def zkontroluj_vstup(vstup_uzivatele: str) -> bool:
@@ -141,14 +141,17 @@ print("Enter a number:")
 print(oddelovac)
 
 vzor = vytvor_ctyrmistne_cislo()
-print(vzor)
-hodnoceni = {"bull": 0}
+hodnoceni = {"bull": 0, "pocitadlo": 0}
 while hodnoceni["bull"] != 4:
     vstup = input(">>> ")
     if zkontroluj_vstup(vstup):
         hodnoceni = vyhodnot_vstup(vstup, vzor)
+        hodnoceni["pocitadlo"] += 1
         print(hodnoceni["bull"], " Bulls,", hodnoceni["cow"], "Cows")
-
+        print(oddelovac)
+print("Correct, you've guessed the right number in ", hodnoceni["pocitadlo"],  "guesses!")
+print(oddelovac)
+print("That's amazing!")
     
 
 
