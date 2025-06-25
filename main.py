@@ -5,7 +5,7 @@ author: Michal Uryč
 email: michal.uryc@seznam.cz
 """
 
-#import knihoven
+
 from random import randint
 
 
@@ -18,13 +18,12 @@ def vytvor_ctyrmistne_cislo() -> str:
     návrat: str
     """
     vyber_cislic = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
-    prvni_cislice = randint(1,9)
-    cislo = vyber_cislic[prvni_cislice]
-    del vyber_cislic[prvni_cislice]
+    cislo = vyber_cislic[(randint(1,9))]
+    vyber_cislic.remove(cislo)
     for c in range(3):
-        dalsi_cislice = randint(0,(len(vyber_cislic)-1))
-        cislo = str(cislo) + str(vyber_cislic[dalsi_cislice])
-        del vyber_cislic[dalsi_cislice]
+        dalsi_cislice = vyber_cislic[(randint(0,(len(vyber_cislic)-1)))]
+        cislo = str(cislo) + str(dalsi_cislice)
+        vyber_cislic.remove(dalsi_cislice)
     return str(cislo)
 
 def zkontroluj_vstup(vstup_uzivatele: str) -> bool:
@@ -35,14 +34,11 @@ def zkontroluj_vstup(vstup_uzivatele: str) -> bool:
 
     návrat: bool
     """
-    if not vstup_uzivatele.isnumeric():
-        print("Musíš zadat celé číslo")
+    if not vstup_uzivatele.isnumeric() or vstup_uzivatele[0] == "0":
+        print("Musíš zadat celé číslo které nezačíná nulou")
         vystup = False 
-    elif len(vstup_uzivatele) > 4 or len(vstup_uzivatele) < 4:
+    elif len(vstup_uzivatele) != 4:
         print("číslo není čtyřciferné")
-        vystup = False
-    elif vstup_uzivatele[0] == "0":
-        print("Číslo nesmí začínat nulou")
         vystup = False
     else:
         vystup = True
@@ -102,27 +98,28 @@ def jednotne_mnozne(slovnik: dict) -> str:
 oddelovac = 30 * "-"
 
 #hlavička
-print("Hi there !")
-print(oddelovac)
-print("I've generated a random 4 digit number for you.")
-print("Let's play a bulls and cows game.")
-print(oddelovac)
-print("Enter a number:")
-print(oddelovac)
+if __name__ == '__main__':
+    print("Hi there !")
+    print(oddelovac)
+    print("I've generated a random 4 digit number for you.")
+    print("Let's play a bulls and cows game.")
+    print(oddelovac)
+    print("Enter a number:")
+    print(oddelovac)
 
-vzor = vytvor_ctyrmistne_cislo()
-hodnoceni = {"bull": 0}
-pocitadlo = 0
-while hodnoceni["bull"] != 4:
-    vstup = input(">>> ")
-    if zkontroluj_vstup(vstup):
-        hodnoceni = vyhodnot_vstup(vstup, vzor)
-        pocitadlo += 1
-        print(jednotne_mnozne(hodnoceni))
-        print(oddelovac)
-print("Correct, you've guessed the right number in ", pocitadlo,  "guesses!")
-print(oddelovac)
-print("That's amazing!")
-    
+    tajne_cislo = vytvor_ctyrmistne_cislo()
+    hodnoceni = {"bull": 0, "cow": 0}
+    pocitadlo = 0
+    while hodnoceni["bull"] != 4:
+        vstup = input(">>> ")
+        if zkontroluj_vstup(vstup):
+            hodnoceni = vyhodnot_vstup(vstup, tajne_cislo)
+            pocitadlo += 1
+            print(jednotne_mnozne(hodnoceni))
+            print(oddelovac)
+    print(f"Correct, you've guessed the right number in {pocitadlo} guesses!")
+    print(oddelovac)
+    print("That's amazing!")
+        
 
 
